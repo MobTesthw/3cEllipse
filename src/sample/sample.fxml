@@ -24,7 +24,7 @@
    <children>
       <VBox GridPane.columnIndex="2">
          <children>
-            <Slider fx:id="radMultiplierSlider" blockIncrement="0.01" max="10.0" orientation="VERTICAL" value="5.0" VBox.vgrow="ALWAYS" />
+            <Slider fx:id="radMultiplierSlider" blockIncrement="0.001" max="10.0" orientation="VERTICAL" value="5.0" VBox.vgrow="ALWAYS" />
             <Label fx:id="radMultiplierLabel" text="?" textAlignment="CENTER" />
          </children>
       </VBox>
@@ -44,7 +44,7 @@
       </SplitPane>
       <VBox GridPane.columnIndex="1">
          <children>
-            <Slider fx:id="radDistanceSlider" blockIncrement="0.01" max="10.0" orientation="VERTICAL" value="5.0" VBox.vgrow="ALWAYS" />
+            <Slider fx:id="radDistanceSlider" blockIncrement="0.001" max="10.0" orientation="VERTICAL" value="5.0" VBox.vgrow="ALWAYS" />
             <Label fx:id="radDistanceLabel" text="?" textAlignment="CENTER">
                <VBox.margin>
                   <Insets />

@@ -18,7 +18,7 @@ import kotlin.math.sqrt
 
 
 class Controller{
-    val delta=1.0
+    val delta=0.5
     var radius = 130.0
     var radMultiplier=1.0
     var radDistance=4.0
@@ -37,14 +37,14 @@ class Controller{
        viewportPane.setOnMouseClicked {e->repaintViewport()  }
        radDistanceSlider.valueProperty().addListener { observable, oldValue, newValue ->
            radDistance = radDistanceSlider.value
-           val v:Double=(radDistanceSlider.value*100).roundToInt().toDouble()/100
+           val v:Double=(radDistanceSlider.value*1000).roundToInt().toDouble()/1000
            radDistanceLabel.text=v.toString()
            repaintViewport()
            ta.appendText("\nnew distance: ${radDistanceSlider.value} ")
        }
        radMultiplierSlider.valueProperty().addListener { observable, oldValue, newValue ->
            radMultiplier = radMultiplierSlider.value
-           val v:Double=( radMultiplierSlider.value*100).roundToInt().toDouble()/100
+           val v:Double=( radMultiplierSlider.value*1000).roundToInt().toDouble()/1000
            radMultiplierLabel.text=v.toString()
            repaintViewport()
            ta.appendText("\nnew radius mult: ${radMultiplierSlider.value} ")
@@ -60,8 +60,8 @@ class Controller{
         val w=viewportPane.width
         val h=viewportPane.height
 
-        val a=h/(0.1+radDistance)
-        val b=Math.sqrt(2.0)*a
+        val a=h/(0.00000001+radDistance)
+        val b=2.0*a/ sqrt(3.0)
 
        radius=3* sqrt(b*b+a*a)/4
        radius*=radMultiplier
@@ -94,10 +94,10 @@ class Controller{
         group.children.addAll(circleT,circleR,circleL)
 
 
-        ta.text="w= $w  h=$h  xl= $xl  yl= $yl "
+       ta.appendText("w= $w  h=$h  xl= $xl  yl= $yl ")
 
        ta.appendText("\nw = ${w.toInt()}  h= ${h.toInt()}")
-       var n=0
+//       var n=0
 //       var br=0
 
        for (i in 0..w.toInt()) {
@@ -111,7 +111,7 @@ class Controller{
 
                val rad= rl+rr+rt
 
-               n++
+//               n++
 //               br++
 //               if(br>100000)break
 //               if(n>1000){
