@@ -89,7 +89,8 @@ class Controller{
         val rectangle = Rectangle(100.0, 100.0, Color.RED)
         rectangle.relocate(70.0, 70.0)
 
-
+       val circleC = Circle(1.0, Color.CORAL)
+       circleC.relocate(w/2, h/2)
 
         group.children.addAll(circleT,circleR,circleL)
 
