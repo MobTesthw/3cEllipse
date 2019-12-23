@@ -3,6 +3,7 @@ package sample
 import javafx.beans.value.ChangeListener
 import javafx.fxml.FXML
 import javafx.scene.Group
+import javafx.scene.control.Label
 import javafx.scene.control.Slider
 import javafx.scene.control.SplitPane
 import javafx.scene.control.TextArea
@@ -12,32 +13,39 @@ import javafx.scene.shape.Circle
 import javafx.scene.shape.Line
 import javafx.scene.shape.Rectangle
 import kotlin.math.abs
+import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 
 class Controller{
-    val delta=2.0
+    val delta=1.0
     var radius = 130.0
     var radMultiplier=1.0
-    var radiusDistance=4.0
+    var radDistance=4.0
 
     @FXML lateinit var viewportPane:Pane
     @FXML lateinit var ta:TextArea
     @FXML lateinit var splitPane:SplitPane
-    @FXML lateinit var radiusDistanceSlider:Slider
+    @FXML lateinit var radDistanceSlider:Slider
     @FXML lateinit var radMultiplierSlider:Slider
+    @FXML lateinit var radDistanceLabel: Label
+    @FXML lateinit var radMultiplierLabel:Label
 
    fun initialize() {
 //       viewportPane.heightProperty().addListener { observable, oldValue, newValue -> repaintViewport() }
 //       repaintViewport()
        viewportPane.setOnMouseClicked {e->repaintViewport()  }
-       radiusDistanceSlider.valueProperty().addListener { observable, oldValue, newValue ->
-           radiusDistance = radiusDistanceSlider.value
+       radDistanceSlider.valueProperty().addListener { observable, oldValue, newValue ->
+           radDistance = radDistanceSlider.value
+           val v:Double=(radDistanceSlider.value*100).roundToInt().toDouble()/100
+           radDistanceLabel.text=v.toString()
            repaintViewport()
-           ta.appendText("\nnew distance: ${radiusDistanceSlider.value} ")
+           ta.appendText("\nnew distance: ${radDistanceSlider.value} ")
        }
        radMultiplierSlider.valueProperty().addListener { observable, oldValue, newValue ->
            radMultiplier = radMultiplierSlider.value
+           val v:Double=( radMultiplierSlider.value*100).roundToInt().toDouble()/100
+           radMultiplierLabel.text=v.toString()
            repaintViewport()
            ta.appendText("\nnew radius mult: ${radMultiplierSlider.value} ")
        }
@@ -52,7 +60,7 @@ class Controller{
         val w=viewportPane.width
         val h=viewportPane.height
 
-        val a=h/(0.1+radiusDistance)
+        val a=h/(0.1+radDistance)
         val b=Math.sqrt(2.0)*a
 
        radius=3* sqrt(b*b+a*a)/4
@@ -106,16 +114,16 @@ class Controller{
                n++
 //               br++
 //               if(br>100000)break
-               if(n>1000){
-                   ta.appendText("\nrad - radius  = ${rad - radius}")
-                   n=0
-               }
+//               if(n>1000){
+//                   ta.appendText("\nrad - radius  = ${rad - radius}")
+//                   n=0
+//               }
 
 //               ta.appendText("delta = ${rad-radius}")
 //               ta.appendText("\nrad = ${rad}")
 
                if (abs(rad - radius) <= delta) {
-                   group.children.add(Line(i.toDouble(), j.toDouble(), i.toDouble() + 1.0, j.toDouble() + 1.0))
+                   group.children.add(Line(i.toDouble(), j.toDouble(), i.toDouble(), j.toDouble() ))
 //                   ta.appendText("i= $i  j= $j")
                }
            }
