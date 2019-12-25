@@ -22,6 +22,7 @@ class Controller{
     var radius = 130.0
     var radMultiplier=1.0
     var radDistance=4.0
+    var radThreshold=0.5
 
     @FXML lateinit var viewportPane:Pane
     @FXML lateinit var ta:TextArea
@@ -33,6 +34,8 @@ class Controller{
     @FXML lateinit var cbCenters:CheckBox
     @FXML lateinit var cbDuplicate:CheckBox
     @FXML lateinit var cbCross:CheckBox
+    @FXML lateinit var sThreshold:Slider
+    @FXML lateinit var cbLittleCross:CheckBox
 
    fun initialize() {
 
@@ -56,6 +59,11 @@ class Controller{
        radMultiplierSlider.setOnScroll { e -> radMultiplierSlider.value+=radMultiplierSlider.blockIncrement* sign(e.deltaY) }
        splitPane.setDividerPosition(0,.9)
 
+       sThreshold.valueProperty().addListener { _, _, _ ->
+           radThreshold = sThreshold.value
+           repaintViewport()
+
+       }
    }
 
    private fun repaintViewport()    {
@@ -66,7 +74,7 @@ class Controller{
 
        viewportPane.children.clear()
 
-       viewportPane.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,cbCenters.isSelected))
+       viewportPane.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected))
        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
 
        if(cbDuplicate.isSelected)btnDuplicateClick()
@@ -75,12 +83,12 @@ class Controller{
         val w=viewportPane.width
         val h=viewportPane.height
         val gr1=Group()
-        gr1.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,cbCenters.isSelected))
+        gr1.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected))
         if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
         gr1.transforms.add((Transform.rotate(40.0,w/2,h/2)))
 
         val gr2=Group()
-        gr2.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,cbCenters.isSelected))
+        gr2.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected))
         if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
         gr2.transforms.addAll(Transform.rotate(80.0,w/2,h/2))
 

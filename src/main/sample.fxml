@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane alignment="center" prefHeight="286.0" prefWidth="562.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+<GridPane alignment="center" prefHeight="286.0" prefWidth="572.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
       <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
@@ -43,7 +43,7 @@
       </SplitPane>
       <TabPane side="BOTTOM" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1">
         <tabs>
-          <Tab text="Adj">
+          <Tab text="Adjust">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
@@ -69,6 +69,7 @@
                                     </VBox>
                                  </children>
                               </HBox>
+                              <Slider fx:id="sThreshold" blockIncrement="0.01" max="10.0" value="0.5" />
                               <CheckBox fx:id="cbCross" mnemonicParsing="false" text="Show Cross" />
                               <CheckBox fx:id="cbDuplicate" graphicTextGap="0.0" mnemonicParsing="false" text="Duplicate" />
                               <CheckBox fx:id="cbCenters" mnemonicParsing="false" selected="true" text="Centers" />
@@ -79,9 +80,12 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Set">
+          <Tab text="Setings">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="30.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="30.0">
+                     <children>
+                        <CheckBox fx:id="cbLittleCross" layoutY="6.0" mnemonicParsing="false" selected="true" text="LittleCross" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

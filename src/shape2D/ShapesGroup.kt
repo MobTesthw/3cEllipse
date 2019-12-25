@@ -1,9 +1,6 @@
 package shape2D
 
 import javafx.scene.Group
-import javafx.scene.paint.CycleMethod
-import javafx.scene.paint.LinearGradient
-import javafx.scene.paint.Stop
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Line
 import java.awt.Color
@@ -12,22 +9,29 @@ import kotlin.math.sqrt
 
 class ShapesGroup {
     companion object{
-        fun screenCross(w:Double,h:Double, color: Color = Color.GREEN):Group{
+        //Cross at the center of the screen
+        fun screenCross(w:Double,h:Double, small:Boolean=false, color: Color = Color.GREEN):Group{
 
             val group=Group()
+            val mutlpier=20.0
+            val hStart= if (small) 0.0 else h/2 - h/mutlpier
+            val hEndD = if (small) h   else h/2 + h/mutlpier
 
-            val lineHorizontal = Line(0.0,h/2,w,h/2)
+            val wStart= if (small) 0.0 else w/2 - w/mutlpier
+            val wEndD = if (small) w   else w/2 + w/mutlpier
+
+            val lineHorizontal = Line(wStart,h/2,wEndD,h/2)
             lineHorizontal.stroke= convertColorAwtToJfx(color)
 
-            val lineVertical = Line(w/2,0.0,w/2,h)
+            val lineVertical = Line(w/2,hStart,w/2,hEndD)
             lineVertical.stroke= convertColorAwtToJfx(color)
 
             group.children.addAll( lineHorizontal , lineVertical   )
 
             return group
         }
-        fun drawEllipse(w:Double,h:Double,radDistance:Double, radMultiplier:Double=1.0,showCenters:Boolean=true):Group{
-            val delta=0.5 //threshold to define point to draw
+        fun drawEllipse(w:Double,h:Double,radDistance:Double, radMultiplier:Double=1.0,threshold:Double=0.5, showCenters:Boolean=true):Group{
+//            val threshold=0.5 //threshold to define point to draw
 
             val a=h/(0.00000001+radDistance) // a - triangle height a=a1+a2 top and bottom parts
 
@@ -76,7 +80,7 @@ class ShapesGroup {
 
                     val rad= rl+rr+rt
 
-                    if (abs(rad - radius) <= delta) {
+                    if (abs(rad - radius) <= threshold) {
                         group.children.add(Line(i.toDouble(), j.toDouble(), i.toDouble(), j.toDouble() ))
                     }
                 }
