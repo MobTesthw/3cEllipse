@@ -32,8 +32,10 @@ class ShapesGroup {
             val a=h/(0.00000001+radDistance) // a - triangle height a=a1+a2 top and bottom parts
 
             val b=2.0*a/ sqrt(3.0)
-            val a2 = b/4 //lowest triangle height part
-            val a1=a-a2
+//            val a2 = b/4 //lowest triangle height part
+//            val a1=a-a2
+            val a1= sqrt(3.0)*b/3
+            val a2=a-a1
 
             var radius=3* sqrt(b*b+a*a) /4
             radius*=radMultiplier
