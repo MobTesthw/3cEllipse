@@ -2,10 +2,7 @@ package main
 
 import javafx.fxml.FXML
 import javafx.scene.Group
-import javafx.scene.control.Label
-import javafx.scene.control.Slider
-import javafx.scene.control.SplitPane
-import javafx.scene.control.TextArea
+import javafx.scene.control.*
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
@@ -33,7 +30,9 @@ class Controller{
     @FXML lateinit var radMultiplierSlider:Slider
     @FXML lateinit var radDistanceLabel: Label
     @FXML lateinit var radMultiplierLabel:Label
-
+    @FXML lateinit var cbCenters:CheckBox
+    @FXML lateinit var cbDuplicate:CheckBox
+    @FXML lateinit var cbCross:CheckBox
 
    fun initialize() {
 
@@ -67,17 +66,22 @@ class Controller{
 
        viewportPane.children.clear()
 
-       viewportPane.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier),ShapesGroup.screenCross(w,h))
+       viewportPane.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,cbCenters.isSelected))
+       if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
+
+       if(cbDuplicate.isSelected)btnDuplicateClick()
    }
     @FXML private fun btnDuplicateClick(){
         val w=viewportPane.width
         val h=viewportPane.height
         val gr1=Group()
-        gr1.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier),ShapesGroup.screenCross(w,h))
+        gr1.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,cbCenters.isSelected))
+        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
         gr1.transforms.add((Transform.rotate(40.0,w/2,h/2)))
 
         val gr2=Group()
-        gr2.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier),ShapesGroup.screenCross(w,h))
+        gr2.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,cbCenters.isSelected))
+        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
         gr2.transforms.addAll(Transform.rotate(80.0,w/2,h/2))
 
         viewportPane.children.addAll(gr1, gr2)
