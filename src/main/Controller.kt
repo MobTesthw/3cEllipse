@@ -41,14 +41,14 @@ class Controller{
 
 //       viewportPane.setOnMouseClicked {e->repaintViewport()  }
 
-       radDistanceSlider.valueProperty().addListener { observable, oldValue, newValue ->
+       radDistanceSlider.valueProperty().addListener { _, _, _ ->
            radDistance = radDistanceSlider.value
            val v:Double=(radDistanceSlider.value*1000).roundToInt().toDouble()/1000
            radDistanceLabel.text=v.toString()
            repaintViewport()
            ta.appendText("\nnew distance: ${radDistanceSlider.value} ")
        }
-       radMultiplierSlider.valueProperty().addListener { observable, oldValue, newValue ->
+       radMultiplierSlider.valueProperty().addListener { _, _, _ ->
            radMultiplier = radMultiplierSlider.value
            val v:Double=( radMultiplierSlider.value*1000).roundToInt().toDouble()/1000
            radMultiplierLabel.text=v.toString()
