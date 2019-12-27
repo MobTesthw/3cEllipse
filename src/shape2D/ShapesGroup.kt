@@ -30,7 +30,7 @@ class ShapesGroup {
 
             return group
         }
-        fun drawEllipse(w:Double,h:Double,radDistance:Double, radMultiplier:Double=1.0,threshold:Double=0.5, showCenters:Boolean=true):Group{
+        fun drawEllipse(w:Double,h:Double,radDistance:Double, radMultiplier:Double=1.0,threshold:Double=0.5, showCenters:Boolean=true,centersRadius:Double=3.0):Group{
 //            val threshold=0.5 //threshold to define point to draw
 
             val a=h/(0.00000001+radDistance) // a - triangle height a=a1+a2 top and bottom parts
@@ -56,19 +56,12 @@ class ShapesGroup {
             val group= Group()
 //
             if (showCenters){
-                val circleL = Circle(3.0, javafx.scene.paint.Color.RED)
-                circleL.relocate(xl, yl)
+                val circleL = Circle(xl,yl,centersRadius/*, javafx.scene.paint.Color.RED*/)
+                val circleR = Circle(xr,yr,centersRadius/*, javafx.scene.paint.Color.BLUE*/)
+                val circleT = Circle(xt,yt,centersRadius/*, javafx.scene.paint.Color.YELLOW*/)
+//                val circleC = Circle(w/2,h/2,centersRadius, javafx.scene.paint.Color.CORAL)
 
-                val circleR = Circle(3.0, javafx.scene.paint.Color.BLUE)
-                circleR.relocate(xr, yr)
-
-                val circleT = Circle(3.0, javafx.scene.paint.Color.YELLOW)
-                circleT.relocate(xt, yt)
-
-                val circleC = Circle(1.0, javafx.scene.paint.Color.CORAL)
-                circleC.relocate(w/2, h/2)
-
-                group.children.addAll(circleT,circleR,circleL)
+                group.children.addAll(circleT,circleR,circleL,circleC)
             }
 
             for (i in 0..w.toInt()) {
