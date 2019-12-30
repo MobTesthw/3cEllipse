@@ -4,6 +4,7 @@ import javafx.fxml.FXML
 import javafx.scene.Group
 import javafx.scene.control.*
 import javafx.scene.layout.Pane
+import javafx.scene.transform.Rotate
 import javafx.scene.transform.Transform
 import shape2D.ShapesGroup
 import kotlin.math.roundToInt
@@ -36,7 +37,7 @@ class Controller{
     @FXML lateinit var cbAutoDraw:CheckBox
     @FXML lateinit var cbFill:CheckBox
     @FXML lateinit var sBorder:Slider
-
+    @FXML lateinit var cbFlopOver:CheckBox
    fun initialize() {
 
        sCenterRad.tooltip= Tooltip("Centers radius")
@@ -91,7 +92,7 @@ class Controller{
        }
        sBorder.setOnScroll { e -> sBorder.value+=sBorder.blockIncrement* sign(e.deltaY) }
 
-
+       cbFlopOver.selectedProperty().addListener{_,_,_->repaintViewport()}
    }
 
    @FXML private fun repaintViewport()    {
@@ -118,6 +119,8 @@ class Controller{
        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
 
        if(cbDuplicate.isSelected)btnDuplicateClick()
+       if (cbFlopOver.isSelected)viewportPane.transforms.addAll(Transform.rotate(180.0,w/2,h/2))
+       else viewportPane.transforms.clear()
    }
     @FXML private fun btnDuplicateClick(){
         val w=viewportPane.width

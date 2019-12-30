@@ -17,32 +17,26 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane alignment="center" prefHeight="387.0" prefWidth="572.0" xmlns="http://javafx.com/javafx/11.0.1"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+<GridPane alignment="center" prefHeight="387.0" prefWidth="572.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
     <columnConstraints>
-        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0"/>
-        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity"
-                           prefWidth="90.0"/>
-        <ColumnConstraints hgrow="NEVER"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" />
+        <ColumnConstraints hgrow="NEVER" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
 
     <SplitPane fx:id="splitPane" dividerPositions="0.9" orientation="VERTICAL">
    <items>
        <AnchorPane>
            <children>
-               <Pane fx:id="viewportPane"
-                     style=" -fx-border-color:blue; -fx-border-width: 1; -fx-border-style: solid;"
-                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                     AnchorPane.topAnchor="0.0"/>
+               <Pane fx:id="viewportPane" style=" -fx-border-color:blue; -fx-border-width: 1; -fx-border-style: solid;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
            </children>
        </AnchorPane>
        <AnchorPane minHeight="0.0">
            <children>
-               <TextArea fx:id="ta" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+               <TextArea fx:id="ta" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
            </children>
        </AnchorPane>
@@ -54,49 +48,41 @@
               <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0">
                       <children>
-                          <VBox alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <VBox alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                               <children>
-                                  <CheckBox fx:id="cbFill" mnemonicParsing="false" text="Fill"/>
-                                  <CheckBox fx:id="cbAutoDraw" mnemonicParsing="false" selected="true"
-                                            text="Auto update"/>
-                                  <Button mnemonicParsing="false" onAction="#repaintViewport" prefHeight="26.0"
-                                          prefWidth="89.0" text="Update"/>
+                           <CheckBox fx:id="cbFlopOver" mnemonicParsing="false" text="Flip over" />
+                                  <CheckBox fx:id="cbFill" mnemonicParsing="false" text="Fill" />
+                                  <CheckBox fx:id="cbAutoDraw" mnemonicParsing="false" selected="true" text="Auto update" />
+                                  <Button mnemonicParsing="false" onAction="#repaintViewport" prefHeight="26.0" prefWidth="89.0" text="Update" />
                                   <HBox VBox.vgrow="ALWAYS">
                                       <children>
                                           <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                               <children>
-                                                  <Slider fx:id="radDistanceSlider" blockIncrement="0.001" max="5.0"
-                                                          orientation="VERTICAL" value="2.0" VBox.vgrow="ALWAYS"/>
+                                                  <Slider fx:id="radDistanceSlider" blockIncrement="0.001" max="5.0" orientation="VERTICAL" value="1.5" VBox.vgrow="ALWAYS" />
                                                   <Label fx:id="radDistanceLabel" text="?" textAlignment="CENTER">
                                                       <VBox.margin>
-                                                          <Insets/>
+                                                          <Insets />
                                                       </VBox.margin>
                                                   </Label>
                                               </children>
                                           </VBox>
                                           <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                               <children>
-                                                  <Slider fx:id="radMultiplierSlider" blockIncrement="0.001" max="5.0"
-                                                          orientation="VERTICAL" value="2.0" VBox.vgrow="ALWAYS"/>
-                                                  <Label fx:id="radMultiplierLabel" text="?" textAlignment="CENTER"/>
+                                                  <Slider fx:id="radMultiplierSlider" blockIncrement="0.01" max="5.0" orientation="VERTICAL" value="1.8" VBox.vgrow="ALWAYS" />
+                                                  <Label fx:id="radMultiplierLabel" text="?" textAlignment="CENTER" />
                                               </children>
                                           </VBox>
                                       </children>
                                   </HBox>
-                                  <Slider fx:id="sCenterRad" blockIncrement="1.0" layoutX="10.0" layoutY="173.0"
-                                          value="3.0"/>
-                                  <Label fx:id="lCenterRad" text="Center rad: ?"/>
-                                  <Slider fx:id="sThreshold" blockIncrement="0.05" max="200.0" value="0.5"/>
-                                  <Label fx:id="lThreshold" layoutX="10.0" layoutY="156.0" text="Thershold: ?"/>
-                                  <Slider fx:id="sBorder" blockIncrement="0.01" layoutX="10.0" layoutY="225.0"
-                                          max="10.0" value="1.0"/>
-                                  <CheckBox fx:id="cbCross" mnemonicParsing="false" text="Show Cross"/>
-                                  <CheckBox fx:id="cbDuplicate" graphicTextGap="0.0" mnemonicParsing="false"
-                                            text="Duplicate"/>
-                                  <CheckBox fx:id="cbCenters" mnemonicParsing="false" selected="true" text="Centers"/>
-                                  <Button alignment="CENTER" graphicTextGap="1.0" mnemonicParsing="false"
-                                          onAction="#btnDuplicateClick" text="Triplicate"/>
+                                  <Slider fx:id="sCenterRad" blockIncrement="1.0" layoutX="10.0" layoutY="173.0" value="3.0" />
+                                  <Label fx:id="lCenterRad" text="Center rad: ?" />
+                                  <Slider fx:id="sThreshold" blockIncrement="0.1" max="200.0" value="0.5" />
+                                  <Label fx:id="lThreshold" layoutX="10.0" layoutY="156.0" text="Thershold: ?" />
+                                  <Slider fx:id="sBorder" blockIncrement="0.01" layoutX="10.0" layoutY="225.0" max="10.0" value="1.0" />
+                                  <CheckBox fx:id="cbCross" mnemonicParsing="false" text="Show Cross" />
+                                  <CheckBox fx:id="cbDuplicate" graphicTextGap="0.0" mnemonicParsing="false" text="Duplicate" />
+                                  <CheckBox fx:id="cbCenters" mnemonicParsing="false" selected="true" text="Centers" />
+                                  <Button alignment="CENTER" graphicTextGap="1.0" mnemonicParsing="false" onAction="#btnDuplicateClick" text="Triplicate" />
                               </children>
                           </VBox>
                       </children>
@@ -107,8 +93,7 @@
               <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="30.0">
                       <children>
-                          <CheckBox fx:id="cbLittleCross" layoutY="6.0" mnemonicParsing="false" selected="true"
-                                    text="LittleCross"/>
+                          <CheckBox fx:id="cbLittleCross" layoutY="6.0" mnemonicParsing="false" selected="true" text="LittleCross" />
                       </children>
                   </AnchorPane>
               </content>
