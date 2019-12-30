@@ -4,17 +4,10 @@ import javafx.fxml.FXML
 import javafx.scene.Group
 import javafx.scene.control.*
 import javafx.scene.layout.Pane
-import javafx.scene.paint.Color
-import javafx.scene.shape.Circle
-import javafx.scene.shape.Line
-import javafx.scene.shape.Rectangle
 import javafx.scene.transform.Transform
 import shape2D.ShapesGroup
-import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.math.sign
-import kotlin.math.sqrt
-
 
 
 class Controller{
@@ -23,7 +16,7 @@ class Controller{
     var radMultiplier=1.0
     var radDistance=4.0
     var radThreshold=0.5
-    var centersRadius=3.0
+    var centerRad=3.0
 
     @FXML lateinit var viewportPane:Pane
     @FXML lateinit var ta:TextArea
@@ -37,9 +30,17 @@ class Controller{
     @FXML lateinit var cbCross:CheckBox
     @FXML lateinit var sThreshold:Slider
     @FXML lateinit var cbLittleCross:CheckBox
-    @FXML lateinit var sCenters:Slider
+    @FXML lateinit var sCenterRad:Slider
+    @FXML lateinit var lThreshold:Label
+    @FXML lateinit var lCenterRad:Label
+    @FXML lateinit var cbAutoDraw:CheckBox
 
    fun initialize() {
+
+       sCenterRad.tooltip= Tooltip("Centers radius")
+       sThreshold.tooltip= Tooltip("Locus threshold")
+       radMultiplierSlider.tooltip= Tooltip("Distance between the centers")
+       radDistanceSlider.tooltip= Tooltip("Radius")
 
 //       viewportPane.setOnMouseClicked {e->repaintViewport()  }
 
@@ -47,14 +48,14 @@ class Controller{
            radDistance = radDistanceSlider.value
            val v:Double=(radDistanceSlider.value*1000).roundToInt().toDouble()/1000
            radDistanceLabel.text=v.toString()
-           repaintViewport()
+           if(cbAutoDraw.isSelected)repaintViewport()
            ta.appendText("\nnew distance: ${radDistanceSlider.value} ")
        }
        radMultiplierSlider.valueProperty().addListener { _, _, _ ->
            radMultiplier = radMultiplierSlider.value
            val v:Double=( radMultiplierSlider.value*1000).roundToInt().toDouble()/1000
            radMultiplierLabel.text=v.toString()
-           repaintViewport()
+           if(cbAutoDraw.isSelected)repaintViewport()
            ta.appendText("\nnew radius mult: ${radMultiplierSlider.value} ")
        }
        radDistanceSlider.setOnScroll { e -> radDistanceSlider.value+=radDistanceSlider.blockIncrement*e.deltaY }
@@ -63,27 +64,31 @@ class Controller{
 
        sThreshold.valueProperty().addListener { _, _, _ ->
            radThreshold = sThreshold.value
-           repaintViewport()
+           if(cbAutoDraw.isSelected)repaintViewport()
+           lThreshold.text=(((sThreshold.value*100).roundToInt()).toDouble()/100).toString()
 
        }
        sThreshold.setOnScroll { e -> sThreshold.value+=sThreshold.blockIncrement* sign(e.deltaY) }
-       sCenters.valueProperty().addListener { _, _, _ ->
-           centersRadius = sCenters.value
-           repaintViewport()
+       sCenterRad.valueProperty().addListener { _, _, _ ->
+           centerRad = sCenterRad.value
+           if(cbAutoDraw.isSelected)repaintViewport()
+           lCenterRad.text=(((sCenterRad.value*100).roundToInt()).toDouble()/100).toString()
 
        }
-       sCenters.setOnScroll { e -> sCenters.value+=sCenters.blockIncrement* sign(e.deltaY) }
+       sCenterRad.setOnScroll { e -> sCenterRad.value+=sCenterRad.blockIncrement* sign(e.deltaY) }
    }
 
-   private fun repaintViewport()    {
+   @FXML private fun repaintViewport()    {
+
        val w=viewportPane.width
        val h=viewportPane.height
 
        ta.text=""
+       ta.appendText("w =  $w ,  h =  $h\n")
 
        viewportPane.children.clear()
 
-       viewportPane.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centersRadius))
+       viewportPane.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centerRad))
        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
 
        if(cbDuplicate.isSelected)btnDuplicateClick()
@@ -92,12 +97,12 @@ class Controller{
         val w=viewportPane.width
         val h=viewportPane.height
         val gr1=Group()
-        gr1.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centersRadius))
+        gr1.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centerRad))
         if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
         gr1.transforms.add((Transform.rotate(40.0,w/2,h/2)))
 
         val gr2=Group()
-        gr2.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centersRadius))
+        gr2.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centerRad))
         if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
         gr2.transforms.addAll(Transform.rotate(80.0,w/2,h/2))
 
