@@ -30,9 +30,9 @@ class ShapesGroup {
 
             return group
         }
-        fun drawEllipse(w:Double,h:Double,radDistance:Double, radMultiplier:Double=1.0,threshold:Double=0.5, showCenters:Boolean=true,centersRadius:Double=3.0):Group{
-//            val threshold=0.5 //threshold to define point to draw
-            val ellipseColor=javafx.scene.paint.Color.BLUE
+        fun drawEllipse(w:Double,h:Double,radDistance:Double, radMultiplier:Double=1.0,threshold:Double=0.5,fill:Boolean=false,border:Double=3.0, showCenters:Boolean=true,centersRadius:Double=3.0):Group{
+
+//            val ellipseColor=javafx.scene.paint.Color.BLUE
 
             val a=h/(0.00000001+radDistance) // a - triangle height a=a1+a2 top and bottom parts
 
@@ -76,7 +76,13 @@ class ShapesGroup {
 
                     val rad= rl+rr+rt
 
-                    if (abs(rad - radius) <= threshold) {
+
+
+                    if(fill) {
+                        if (abs(rad - radius) <= threshold)                     // Draw shape with filling
+                            group.children.add(Line(i.toDouble(), j.toDouble(), i.toDouble(), j.toDouble() ))
+                    }
+                    else if(abs(abs(rad - radius)-threshold )<=border){     //Draw borders only
                         group.children.add(Line(i.toDouble(), j.toDouble(), i.toDouble(), j.toDouble() ))
                     }
                 }

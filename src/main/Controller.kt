@@ -34,6 +34,8 @@ class Controller{
     @FXML lateinit var lThreshold:Label
     @FXML lateinit var lCenterRad:Label
     @FXML lateinit var cbAutoDraw:CheckBox
+    @FXML lateinit var cbFill:CheckBox
+    @FXML lateinit var sBorder:Slider
 
    fun initialize() {
 
@@ -44,6 +46,8 @@ class Controller{
 
 //       viewportPane.setOnMouseClicked {e->repaintViewport()  }
 
+       // Distance between Centers radius Slider
+       radDistanceSlider.setOnScroll { e -> radDistanceSlider.value+=radDistanceSlider.blockIncrement*e.deltaY }
        radDistanceSlider.valueProperty().addListener { _, _, _ ->
            radDistance = radDistanceSlider.value
            val v:Double=(radDistanceSlider.value*1000).roundToInt().toDouble()/1000
@@ -58,10 +62,12 @@ class Controller{
            if(cbAutoDraw.isSelected)repaintViewport()
            ta.appendText("\nnew radius mult: ${radMultiplierSlider.value} ")
        }
-       radDistanceSlider.setOnScroll { e -> radDistanceSlider.value+=radDistanceSlider.blockIncrement*e.deltaY }
+
        radMultiplierSlider.setOnScroll { e -> radMultiplierSlider.value+=radMultiplierSlider.blockIncrement* sign(e.deltaY) }
+
        splitPane.setDividerPosition(0,.9)
 
+       // Ellipse thickness radius Slider
        sThreshold.valueProperty().addListener { _, _, _ ->
            radThreshold = sThreshold.value
            if(cbAutoDraw.isSelected)repaintViewport()
@@ -69,6 +75,8 @@ class Controller{
 
        }
        sThreshold.setOnScroll { e -> sThreshold.value+=sThreshold.blockIncrement* sign(e.deltaY) }
+
+       // Centers radius Slider
        sCenterRad.valueProperty().addListener { _, _, _ ->
            centerRad = sCenterRad.value
            if(cbAutoDraw.isSelected)repaintViewport()
@@ -76,6 +84,14 @@ class Controller{
 
        }
        sCenterRad.setOnScroll { e -> sCenterRad.value+=sCenterRad.blockIncrement* sign(e.deltaY) }
+
+       // Border Slider
+       sBorder.valueProperty().addListener { _, _, _ ->
+           if(cbAutoDraw.isSelected)repaintViewport()
+       }
+       sBorder.setOnScroll { e -> sBorder.value+=sBorder.blockIncrement* sign(e.deltaY) }
+
+
    }
 
    @FXML private fun repaintViewport()    {
@@ -88,7 +104,17 @@ class Controller{
 
        viewportPane.children.clear()
 
-       viewportPane.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centerRad))
+       viewportPane.children.addAll(ShapesGroup.drawEllipse(
+               w,
+               h,
+               radDistance,             //radius
+               radMultiplier,           //Distance between centers
+               sThreshold.value,        //radius threshold
+               cbFill.isSelected,       // fill
+               sBorder.value,           //border width
+               cbCenters.isSelected,    //Show centers
+               centerRad))              //radius of centers
+
        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
 
        if(cbDuplicate.isSelected)btnDuplicateClick()
