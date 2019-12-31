@@ -104,6 +104,7 @@ class Controller{
        ta.appendText("w =  $w ,  h =  $h\n")
 
        viewportPane.children.clear()
+       viewportPane.transforms.clear()
 
        viewportPane.children.addAll(ShapesGroup.drawEllipse(
                w,
@@ -126,14 +127,28 @@ class Controller{
         val w=viewportPane.width
         val h=viewportPane.height
         val gr1=Group()
-        gr1.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centerRad))
-        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
-        gr1.transforms.add((Transform.rotate(40.0,w/2,h/2)))
+        gr1.children.addAll(ShapesGroup.drawEllipse(
+                w,
+                h,
+                radDistance,             //radius
+                radMultiplier,           //Distance between centers
+                sThreshold.value,        //radius threshold
+                cbFill.isSelected,       // fill
+                sBorder.value,           //border width
+                cbCenters.isSelected,    //Show centers
+                centerRad,40.0))              //radius of centers
 
         val gr2=Group()
-        gr2.children.addAll(ShapesGroup.drawEllipse(w,h,radDistance,radMultiplier,sThreshold.value,cbCenters.isSelected,centerRad))
-        if (cbCross.isSelected)viewportPane.children.addAll(ShapesGroup.screenCross(w,h))
-        gr2.transforms.addAll(Transform.rotate(80.0,w/2,h/2))
+        gr2.children.addAll(ShapesGroup.drawEllipse(
+                w,
+                h,
+                radDistance,             //radius
+                radMultiplier,           //Distance between centers
+                sThreshold.value,        //radius threshold
+                cbFill.isSelected,       // fill
+                sBorder.value,           //border width
+                cbCenters.isSelected,    //Show centers
+                centerRad,80.0))              //radius of centers
 
         viewportPane.children.addAll(gr1, gr2)
     }
